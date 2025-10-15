@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RB Phones Repair Invoice</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a clean look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        /* Custom utility for the partition lines */
+        .partition-line {
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 1.5rem 0;
+        }
+        /* Styling for print readiness */
+        @media print {
+            body {
+                background-color: #ffffff;
+            }
+            .invoice-container {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="p-4 sm:p-8 flex justify-center">
+
+        <!-- Invoice Container: Centered and styled like a clean paper document -->
+        <div class="invoice-container w-full max-w-3xl bg-white p-8 md:p-10 lg:p-12 rounded-lg shadow-xl border border-gray-200">
+
+            <!-- 1. Top Heading: Shop Name -->
+            <header class="text-center mb-6">
+                <h1 class="text-4xl font-extrabold text-gray-900 tracking-wider">RB Phones</h1>
+                <!-- Subtitle font is uniform text-sm -->
+                <p class="text-sm text-gray-700">Professional Device Repair Services</p>
+            </header>
+
+            <!-- Partition Line -->
+            <div class="partition-line"></div>
+
+            <!-- 2. Contact Info (Left) and QR Code (Right) -->
+            <section class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                <!-- Left: Shop and Owner Details - All detail text is now text-sm -->
+                <div class="text-sm space-y-1 text-gray-900">
+                    <p><span class="font-semibold text-gray-700">Shop:</span> RB Phones Repair Center</p>
+                    <p><span class="font-semibold text-gray-700">Owner:</span> Rohit Bhatiya</p>
+                    <p><span class="font-semibold text-gray-700">Mobile:</span> +91 9876 543 210</p>
+                    <p><span class="font-semibold text-gray-700">Email:</span> support@rbphones.in</p>
+                    <!-- Address line is now text-sm for uniformity -->
+                    <p class="text-sm text-gray-500 mt-2">123 Service Road, Tech City, 380001</p>
+                </div>
+
+                <!-- Right: Payment QR Code -->
+                <div class="text-center p-3 border border-gray-300 rounded-lg bg-gray-50">
+                    <!-- QR code title kept small to fit in box -->
+                    <p class="text-xs font-medium text-gray-700 mb-1">Scan to Pay</p>
+                    <img src="https://placehold.co/120x120/4b5563/ffffff?text=Payment+QR" alt="Payment QR Code" class="w-28 h-28 mx-auto rounded-md shadow-sm">
+                </div>
+            </section>
+
+            <!-- Partition Line -->
+            <div class="partition-line"></div>
+
+            <!-- 3. Job and Customer Details - All labels and values are text-sm, except the highlighted Job ID -->
+            <section class="grid grid-cols-2 gap-4 text-sm mb-6">
+                <div>
+                    <!-- Job ID label is text-sm -->
+                    <p class="font-medium text-gray-700 text-sm">Job ID</p>
+                    <!-- Job ID value is HIGHLIGHTED with text-xl -->
+                    <p class="text-sm font-bold text-gray-900">J-RB-2025-1008</p>
+                </div>
+                <div>
+                    <p class="font-medium text-gray-700 text-sm">Customer Name</p>
+                    <p class="text-sm font-bold text-gray-900">Ms. Jane Doe</p>
+                </div>
+                
+                <div class="col-span-2 sm:col-span-1">
+                    <p class="font-medium text-gray-700 text-sm">Device</p>
+                    <p class="text-sm text-gray-900">iPhone 14 Pro (Serial: P304S-092)</p>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                    <p class="font-medium text-gray-700 text-sm">Invoice Date</p>
+                    <p class="text-sm text-gray-900">October 09, 2025</p>
+                </div>
+            </section>
+
+            <!-- Partition Line -->
+            <div class="partition-line"></div>
+
+            <!-- 4. Line Items: Issue and Charge Details -->
+            <section class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4 border-b-2 pb-2">Repair Breakdown</h3>
+                
+                <!-- Table Header - Consistent text-sm size -->
+                <div class="flex justify-between font-semibold text-sm uppercase text-gray-700 pb-2 border-b border-gray-200">
+                    <p class="w-3/4 text-left">Issue / Service Provided</p>
+                    <p class="w-1/4 text-right">Charge (INR)</p>
+                </div>
+
+                <!-- Line Items - Consistent text-sm size -->
+                <div class="flex justify-between py-3 border-b border-gray-100 text-sm">
+                    <p class="w-3/4 text-gray-700">Display Replacement (AMOLED Panel)</p>
+                    <p class="w-1/4 text-right font-medium text-gray-900">4,500.00</p>
+                </div>
+
+                <div class="flex justify-between py-3 border-b border-gray-100 text-sm">
+                    <p class="w-3/4 text-gray-700">Water Damage Cleanup & Board Repair (Labor)</p>
+                    <p class="w-1/4 text-right font-medium text-gray-900">2,200.00</p>
+                </div>
+
+                <div class="flex justify-between py-3 border-b border-gray-100 text-sm">
+                    <p class="w-3/4 text-gray-700">Standard Diagnostics Fee (Waived)</p>
+                    <p class="w-1/4 text-right font-medium text-gray-900">0.00</p>
+                </div>
+                
+            </section>
+            
+            <!-- Partition Line -->
+            <div class="partition-line"></div>
+
+            <!-- 5. Total Amount to be Paid - HIGHLIGHTED -->
+            <footer class="flex justify-end">
+                <div class="w-full sm:w-1/2 space-y-3">
+                    <!-- Subtotal - Consistent text-sm size -->
+                    <div class="flex justify-between text-sm font-semibold text-gray-800">
+                        <span>Subtotal:</span>
+                        <span>6,700.00</span>
+                    </div>
+                    <!-- New Service Charge Line - Consistent text-sm size -->
+                    <div class="flex justify-between text-sm font-semibold text-gray-800">
+                        <span>Service Charge:</span>
+                        <span>500.00</span>
+                    </div>
+                    <!-- Placeholder Discount Line - Consistent text-sm size -->
+                    <div class="flex justify-between text-sm font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                        <span>Discount / Adjustment:</span>
+                        <span>0.00</span>
+                    </div>
+                    <!-- Total Due remains HIGHLIGHTED with text-2xl and font-extrabold -->
+                    <div class="flex justify-between text-lg font-extrabold text-gray-900 pt-2 border-t-4 border-gray-900">
+                        <span>TOTAL DUE:</span>
+                        <span>INR 7,200.00</span>
+                    </div>
+                </div>
+            </footer>
+            
+            <p class="text-center text-xs text-gray-500 mt-10 italic">Thank you for choosing RB Phones! Warranty details are provided separately.</p>
+
+        </div>
+    </div>
+
+</body>
+</html>
