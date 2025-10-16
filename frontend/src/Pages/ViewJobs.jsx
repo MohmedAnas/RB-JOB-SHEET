@@ -15,9 +15,10 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  IconButton
 } from '@mui/material';
-import { ViewList, Add, Refresh, Edit, Delete, Visibility, Download, PictureAsPdf, TableChart, Description } from '@mui/icons-material';
+import { ViewList, Add, Refresh, Edit, Delete, Visibility, Download, PictureAsPdf, TableChart, Description, Menu as MenuIcon } from '@mui/icons-material';
 import Sidebar from '../components/Sidebar';
 import JobTable from '../components/JobTable';
 import DataForm from '../components/DataForm';
@@ -26,7 +27,7 @@ import { useSidebar } from '../context/SidebarContext';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ViewJobs = () => {
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed, toggleSidebar } = useSidebar();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editDialog, setEditDialog] = useState({ open: false, job: null });
@@ -322,17 +323,19 @@ const ViewJobs = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', width: '100vw' }}>
+    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', minHeight: '100vh' }}>
       <Sidebar />
       
       <Box sx={{ 
         flexGrow: 1, 
-        ml: isCollapsed ? '70px' : '240px',
-        p: 4,
+        ml: { xs: 0, md: isCollapsed ? '70px' : '240px' },
+        p: { xs: 2, sm: 3, md: 4 },
+        pt: { xs: '80px', md: 4 },
         minWidth: 0,
         transition: 'margin-left 0.3s ease',
         width: '100%',
-        maxWidth: 'none'
+        maxWidth: 'none',
+        overflow: 'hidden'
       }}>
         {/* Header */}
         <Paper 
@@ -347,12 +350,36 @@ const ViewJobs = () => {
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <ViewList sx={{ fontSize: 40 }} />
+              <IconButton
+                onClick={toggleSidebar}
+                sx={{ 
+                  display: { xs: 'block', md: 'none' },
+                  color: 'white',
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.2)' }
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <ViewList sx={{ fontSize: { xs: 30, md: 40 } }} />
               <Box>
-                <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                <Typography 
+                  variant="h4" 
+                  sx={{ 
+                    fontWeight: 'bold', 
+                    mb: 0.5,
+                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+                  }}
+                >
                   Job Entries
                 </Typography>
-                <Typography variant="body1" sx={{ opacity: 0.9 }}>
+                <Typography 
+                  variant="body1" 
+                  sx={{ 
+                    opacity: 0.9,
+                    display: { xs: 'none', sm: 'block' }
+                  }}
+                >
                   Manage and track all repair jobs
                 </Typography>
               </Box>
