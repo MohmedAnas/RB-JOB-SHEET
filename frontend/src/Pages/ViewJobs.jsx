@@ -23,6 +23,8 @@ import JobTable from '../components/JobTable';
 import DataForm from '../components/DataForm';
 import { useSidebar } from '../context/SidebarContext';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ViewJobs = () => {
   const { isCollapsed } = useSidebar();
   const [jobs, setJobs] = useState([]);
