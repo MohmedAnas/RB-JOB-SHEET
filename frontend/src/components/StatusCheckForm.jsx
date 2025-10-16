@@ -31,9 +31,9 @@ const StatusCheckForm = ({ onSearch }) => {
 
   const handleDownloadInvoice = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/jobs/${jobData.uid}/invoice`), {
-        method: 'GET',
-      });
+      const response = await fetch(`${API_URL}/api/jobs/${jobData.uid}/invoice`, {
+  method: 'GET',
+});
       
       if (response.ok) {
         const blob = await response.blob();
