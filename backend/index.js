@@ -53,7 +53,7 @@ app.use('/api/jobs', strictLimiter);
 
 // CORS with specific origin
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
+  origin: process.env.NODE_ENV === 'production'
     ? ['https://rbjobsheets.in', 'https://rb-job-sheets.netlify.app']
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
@@ -68,25 +68,39 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request logging middleware
+// 🪵 NEW: Detailed Request logging middleware
 app.use((req, res, next) => {
   const timestamp = new Date().toISOString();
   const ip = req.ip || req.connection.remoteAddress;
+  console.log(`[${timestamp}] Incoming Request: ${req.method} ${req.originalUrl} from IP: ${ip}`);
+
+  const oldSend = res.send;
+  res.send = function (data) {
+    console.log(`[${new Date().toISOString()}] Response Sent: ${req.method} ${req.originalUrl} with status ${res.statusCode}`);
+    res.send = oldSend;
+    return res.send(...arguments);
+  };
   next();
 });
 
 // Routes
 try {
-  app.use('/api/jobs', (await import('./routes/jobs.js')).default);
-  app.use('/api/auth', (await import('./routes/auth.js')).default);
+  const jobsRoute = (await import('./routes/jobs.js')).default;
+  const authRoute = (await import('./routes/auth.js')).default;
+  app.use('/api/jobs', jobsRoute);
+  app.use('/api/auth', authRoute);
+  console.log('✅ Routes loaded successfully: /api/jobs and /api/auth');
 } catch (routeError) {
-  // Routes failed to load
+  // 🪵 NEW: Log route loading failure
+  console.error('❌ Error loading routes:', routeError);
+  // Re-throw the error to ensure the application doesn't start with broken routes
+  process.exit(1);
 }
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'Server running securely', 
+  res.json({
+    status: 'Server running securely',
     timestamp: new Date().toISOString(),
     version: '2.0.0-secure',
     environment: process.env.NODE_ENV || 'development'
@@ -102,21 +116,28 @@ app.use((req, res, next) => {
   next();
 });
 
-// Error handler middleware with security considerations
+// 🪵 NEW: Enhanced Error handler middleware
 app.use((err, req, res, next) => {
   const isDevelopment = process.env.NODE_ENV !== 'production';
-  
-  res.status(err.status || 500).json({ 
+  const errorMessage = isDevelopment ? err.message : 'Internal server error';
+
+  console.error(`❌ API Error for ${req.method} ${req.originalUrl}:`, errorMessage);
+  if (isDevelopment && err.stack) {
+    console.error(err.stack);
+  }
+
+  res.status(err.status || 500).json({
     success: false,
-    error: isDevelopment ? err.message : 'Internal server error',
+    error: errorMessage,
     timestamp: new Date().toISOString(),
     ...(isDevelopment && { stack: err.stack })
   });
 });
 
-// 404 handler
+// 🪵 NEW: Detailed 404 handler
 app.use((req, res) => {
-  res.status(404).json({ 
+  console.warn(`⚠️ 404 Not Found for ${req.method} ${req.originalUrl}`);
+  res.status(404).json({
     success: false,
     error: 'Route not found',
     timestamp: new Date().toISOString()
@@ -127,35 +148,45 @@ app.use((req, res) => {
 const startServer = async () => {
   try {
     await initSheet();
+    console.log('✅ Google Sheets initialized successfully.');
   } catch (error) {
-    // Sheet initialization failed
+    // 🪵 NEW: Log sheet initialization failure
+    console.error('❌ Google Sheets initialization failed:', error);
+    process.exit(1); // Exit if a critical service fails to start
   }
 
   try {
     app.listen(PORT, () => {
-      // Server started
+      // 🪵 NEW: Log server start
+      console.log(`✅ Server is listening on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
     });
   } catch (listenError) {
-    // Server failed to start
+    // 🪵 NEW: Log server start failure
+    console.error('❌ Server failed to start:', listenError);
+    process.exit(1);
   }
 };
 
 startServer();
 
-// Enhanced error handling
+// 🪵 NEW: Enhanced Enhanced error handling
 process.on('uncaughtException', (err) => {
+  console.error('🚨 Uncaught Exception:', err);
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, p) => {
+  console.error('🚨 Unhandled Rejection at Promise:', p, 'reason:', reason);
   process.exit(1);
 });
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
+  console.log('🚪 SIGTERM signal received. Shutting down gracefully.');
   process.exit(0);
 });
 
 process.on('SIGINT', () => {
+  console.log('🚪 SIGINT signal received. Shutting down gracefully.');
   process.exit(0);
 });
