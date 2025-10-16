@@ -6,15 +6,16 @@ import {
   Button,
   Alert,
   Snackbar,
-  Paper
+  Paper,
+  IconButton
 } from '@mui/material';
-import { Add, ViewList, ArrowBack } from '@mui/icons-material';
+import { Add, ViewList, ArrowBack, Menu } from '@mui/icons-material';
 import Sidebar from '../components/Sidebar';
 import DataForm from '../components/DataForm';
 import { useSidebar } from '../context/SidebarContext';
 
 const AddJob = () => {
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed, toggleSidebar } = useSidebar();
   const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });
   const navigate = useNavigate();
 
@@ -51,16 +52,18 @@ const AddJob = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', width: '100vw' }}>
+    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', minHeight: '100vh' }}>
       <Sidebar />
       
       <Box sx={{ 
         flexGrow: 1, 
-        ml: isCollapsed ? '70px' : '240px', 
-        p: 4,
+        ml: { xs: 0, md: isCollapsed ? '70px' : '240px' }, 
+        p: { xs: 2, sm: 3, md: 4 },
+        pt: { xs: '80px', md: 4 },
         transition: 'margin-left 0.3s ease',
         width: '100%',
-        maxWidth: 'none'
+        maxWidth: 'none',
+        overflow: 'hidden'
       }}>
         {/* Header */}
         <Paper 
@@ -75,10 +78,33 @@ const AddJob = () => {
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Add sx={{ fontSize: 40 }} />
+              <IconButton
+                onClick={toggleSidebar}
+                sx={{ 
+                  display: { xs: 'block', md: 'none' },
+                  color: 'white',
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.2)' }
+                }}
+              >
+                <Menu />
+              </IconButton>
+              <Add sx={{ fontSize: { xs: 30, md: 40 } }} />
               <Box>
-                <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                  Add New Job Entry
+                <Typography 
+                  variant="h4" 
+                  sx={{ 
+                    fontWeight: 'bold', 
+                    mb: 0.5,
+                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+                  }}
+                >
+                  <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                    Add New Job Entry
+                  </Box>
+                  <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>
+                    Add Job
+                  </Box>
                 </Typography>
                 <Typography variant="body1" sx={{ opacity: 0.9 }}>
                   Create a new mobile repair job entry
