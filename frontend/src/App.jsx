@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SidebarProvider } from './context/SidebarContext';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -35,13 +36,46 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
+// Route tracker component
+const RouteTracker = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    console.log(`[App.jsx] Route changed to: ${location.pathname}`);
+  }, [location.pathname]);
+  
+  return null;
+};
+
 function App() {
+  useEffect(() => {
+    console.log('[App.jsx] App component mounted');
+    
+    // Global error handler
+    const handleError = (event) => {
+      console.error(`[App.jsx] ERROR in file: ${event.filename || 'unknown'}, line: ${event.lineno || 'unknown'}, message: ${event.message}`);
+    };
+    
+    const handleRejection = (event) => {
+      console.error(`[App.jsx] PROMISE REJECTION: ${event.reason}`);
+    };
+    
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleRejection);
+    
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleRejection);
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AuthProvider>
         <SidebarProvider>
           <Router>
+            <RouteTracker />
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<CustomerHome />} />
