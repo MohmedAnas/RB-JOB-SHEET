@@ -168,30 +168,28 @@ const Dashboard = () => {
         {/* Header */}
         <Box sx={{ mb: 4 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <IconButton
                 onClick={toggleSidebar}
                 sx={{ 
-                  display: { xs: 'block', md: 'none' },
+                  display: { xs: 'flex', md: 'none' },
                   color: '#007BFF',
                   bgcolor: 'rgba(0, 123, 255, 0.1)',
-                  '&:hover': { bgcolor: 'rgba(0, 123, 255, 0.2)' }
+                  '&:hover': { bgcolor: 'rgba(0, 123, 255, 0.2)' },
+                  mr: 1
                 }}
               >
                 <Menu />
               </IconButton>
+              <TrendingUp sx={{ fontSize: { xs: 24, md: 40 }, color: '#007BFF' }} />
               <Typography 
                 variant="h4" 
                 sx={{ 
                   fontWeight: 'bold', 
                   color: '#007BFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 2,
-                  fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+                  fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.125rem' }
                 }}
               >
-                <TrendingUp sx={{ fontSize: { xs: 30, md: 40 } }} />
                 <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
                   Dashboard Analytics
                 </Box>
