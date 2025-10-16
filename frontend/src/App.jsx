@@ -1,9 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SidebarProvider } from './context/SidebarContext';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import React, { useEffect } from 'react'; // Make sure to import useEffect
 
 // Pages
 import CustomerHome from './Pages/CustomerHome';
@@ -28,15 +27,11 @@ const theme = createTheme({
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
-  const location = useLocation();
-
+  
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  // Log to debug router behavior
-  console.log(`[ProtectedRoute] Path: ${location.pathname}, Authenticated: ${isAuthenticated}`);
-
+  
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
@@ -51,7 +46,7 @@ function App() {
               {/* Public Routes */}
               <Route path="/" element={<CustomerHome />} />
               <Route path="/login" element={<Login />} />
-
+              
               {/* Protected Admin Routes */}
               <Route path="/dashboard" element={
                 <ProtectedRoute>
@@ -73,7 +68,7 @@ function App() {
                   <Settings />
                 </ProtectedRoute>
               } />
-
+              
               {/* Redirect unknown routes */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
