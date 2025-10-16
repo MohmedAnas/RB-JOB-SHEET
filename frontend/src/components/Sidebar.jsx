@@ -23,16 +23,15 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
-        width: { xs: isCollapsed ? 0 : '100%', md: isCollapsed ? 70 : 240 },
-        height: { xs: isCollapsed ? 0 : '100vh', md: '100vh' },
+        width: isCollapsed ? 70 : 240,
+        height: '100vh',
         bgcolor: '#007BFF',
         color: 'white',
-        position: { xs: isCollapsed ? 'absolute' : 'fixed', md: 'fixed' },
+        position: 'fixed',
         left: 0,
         top: 0,
-        zIndex: { xs: 1300, md: 50 },
-        transition: 'all 0.3s ease',
-        transform: { xs: isCollapsed ? 'translateX(-100%)' : 'translateX(0)', md: 'none' },
+        zIndex: 50,
+        transition: 'width 0.3s ease',
         display: { xs: isCollapsed ? 'none' : 'block', md: 'block' }
       }}
     >
