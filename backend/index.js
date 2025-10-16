@@ -54,7 +54,7 @@ app.use('/api/jobs', strictLimiter);
 // CORS with specific origin
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://rbjobsheets.in', 'https://www.rbjobsheets.in']
+    ? ['https://rbjobsheets.in', 'https://rb-job-sheets.netlify.app']
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200,
