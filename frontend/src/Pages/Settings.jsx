@@ -17,12 +17,12 @@ import {
   Avatar,
   IconButton
 } from '@mui/material';
-import { Settings as SettingsIcon, Save, PhotoCamera, Business, Person, Palette, Notifications } from '@mui/icons-material';
+import { Settings as SettingsIcon, Save, PhotoCamera, Business, Person, Palette, Notifications, Menu } from '@mui/icons-material';
 import Sidebar from '../components/Sidebar';
 import { useSidebar } from '../context/SidebarContext';
 
 const Settings = () => {
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed, toggleSidebar } = useSidebar();
   const [activeTab, setActiveTab] = useState(0);
   const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });
 
@@ -352,26 +352,40 @@ const Settings = () => {
   );
 
   return (
-    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', width: '100vw' }}>
+    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', minHeight: '100vh' }}>
       <Sidebar />
       
       <Box sx={{ 
         flexGrow: 1, 
-        ml: isCollapsed ? '70px' : '240px',
-        p: 4,
+        ml: { xs: 0, md: isCollapsed ? '70px' : '240px' },
+        p: { xs: 2, sm: 3, md: 4 },
+        pt: { xs: '80px', md: 4 },
         transition: 'margin-left 0.3s ease',
         width: '100%',
-        maxWidth: 'none'
+        maxWidth: 'none',
+        overflow: 'hidden'
       }}>
         {/* Header */}
         <Box sx={{ mb: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-            <SettingsIcon sx={{ fontSize: 40, color: '#007BFF' }} />
+            <IconButton
+              onClick={toggleSidebar}
+              sx={{ 
+                display: { xs: 'block', md: 'none' },
+                color: '#007BFF',
+                bgcolor: 'rgba(0, 123, 255, 0.1)',
+                '&:hover': { bgcolor: 'rgba(0, 123, 255, 0.2)' }
+              }}
+            >
+              <Menu />
+            </IconButton>
+            <SettingsIcon sx={{ fontSize: { xs: 30, md: 40 }, color: '#007BFF' }} />
             <Typography 
               variant="h4" 
               sx={{ 
                 fontWeight: 'bold', 
-                color: '#007BFF'
+                color: '#007BFF',
+                fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
               }}
             >
               Settings
