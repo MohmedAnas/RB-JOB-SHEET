@@ -121,6 +121,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] Incoming Request: ${req.method} ${req.originalUrl} from IP: ${req.ip}`);
+  next();
+});
+
 // 🪵 NEW: Enhanced Error handler middleware
 app.use((err, req, res, next) => {
   const isDevelopment = process.env.NODE_ENV !== 'production';
