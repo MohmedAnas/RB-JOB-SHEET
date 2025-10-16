@@ -66,7 +66,8 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
     {
       field: 'uid',
       headerName: 'Job ID',
-      width: 120,
+      width: 100,
+      minWidth: 80,
       fontWeight: 'bold',
       renderCell: (params) => (
         <Typography 
@@ -75,7 +76,8 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
             fontWeight: 'bold',
             cursor: 'pointer',
             color: '#007BFF',
-            '&:hover': { textDecoration: 'underline' }
+            '&:hover': { textDecoration: 'underline' },
+            fontSize: { xs: '0.75rem', md: '0.875rem' }
           }}
           onClick={() => onView?.(params.row)}
         >
@@ -86,14 +88,16 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
     {
       field: 'customerName',
       headerName: 'Customer',
-      width: 150,
+      width: 120,
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => (
         <Typography 
           variant="body2" 
           sx={{ 
             cursor: 'pointer',
-            '&:hover': { color: '#007BFF' }
+            '&:hover': { color: '#007BFF' },
+            fontSize: { xs: '0.75rem', md: '0.875rem' }
           }}
           onClick={() => onView?.(params.row)}
         >
@@ -103,14 +107,16 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
     },
     {
       field: 'mobileNumber',
-      headerName: 'Mobile No.',
-      width: 130,
+      headerName: 'Mobile',
+      width: 110,
+      minWidth: 90,
       renderCell: (params) => (
         <Typography 
           variant="body2" 
           sx={{ 
             cursor: 'pointer',
-            '&:hover': { color: '#007BFF' }
+            '&:hover': { color: '#007BFF' },
+            fontSize: { xs: '0.75rem', md: '0.875rem' }
           }}
           onClick={() => onView?.(params.row)}
         >
@@ -121,32 +127,16 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
     {
       field: 'mobileModel',
       headerName: 'Device',
-      width: 140,
+      width: 120,
+      minWidth: 100,
       flex: 1,
       renderCell: (params) => (
         <Typography 
           variant="body2" 
           sx={{ 
             cursor: 'pointer',
-            '&:hover': { color: '#007BFF' }
-          }}
-          onClick={() => onView?.(params.row)}
-        >
-          {params.value}
-        </Typography>
-      )
-    },
-    {
-      field: 'issue',
-      headerName: 'Issue',
-      width: 150,
-      flex: 1,
-      renderCell: (params) => (
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            cursor: 'pointer',
-            '&:hover': { color: '#007BFF' }
+            '&:hover': { color: '#007BFF' },
+            fontSize: { xs: '0.75rem', md: '0.875rem' }
           }}
           onClick={() => onView?.(params.row)}
         >
@@ -157,7 +147,8 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
     {
       field: 'status',
       headerName: 'Status',
-      width: 130,
+      width: 100,
+      minWidth: 80,
       renderCell: (params) => (
         <Chip
           label={params.value}
@@ -166,52 +157,25 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
             bgcolor: getStatusColor(params.value),
             color: 'white',
             fontWeight: 'bold',
-            fontSize: '0.75rem'
+            fontSize: { xs: '0.65rem', md: '0.75rem' },
+            height: { xs: 20, md: 24 }
           }}
         />
       )
     },
     {
-      field: 'components',
-      headerName: 'Components',
-      width: 150,
-      flex: 1,
-      renderCell: (params) => (
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            fontSize: '0.75rem',
-            cursor: 'pointer',
-            '&:hover': { color: '#007BFF' }
-          }}
-          onClick={() => onView?.(params.row)}
-        >
-          {params.value || '-'}
-        </Typography>
-      )
-    },
-    {
-      field: 'completionDate',
-      headerName: 'Completed Date',
-      width: 120,
-      renderCell: (params) => (
-        <Typography variant="body2" sx={{ fontSize: '0.75rem' }}>
-          {params.value ? new Date(params.value).toLocaleDateString('en-GB') : '-'}
-        </Typography>
-      )
-    },
-    {
       field: 'actions',
       headerName: 'Actions',
-      width: 80,
+      width: 60,
+      minWidth: 50,
       sortable: false,
       renderCell: (params) => (
         <IconButton
           size="small"
           onClick={(e) => handleMenuClick(e, params.row)}
-          sx={{ color: '#007BFF' }}
+          sx={{ color: '#007BFF', p: { xs: 0.5, md: 1 } }}
         >
-          <MoreVert />
+          <MoreVert sx={{ fontSize: { xs: 18, md: 24 } }} />
         </IconButton>
       )
     }
@@ -260,7 +224,7 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
         <Box sx={{ 
           height: 500, 
           width: '100%',
-          minWidth: '800px' // Ensures minimum width for proper column display
+          overflow: 'auto'
         }}>
           <DataGrid
             rows={filteredJobs}
