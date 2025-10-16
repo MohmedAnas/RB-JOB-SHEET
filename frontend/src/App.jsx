@@ -5,12 +5,12 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 // Pages
-import CustomerHome from './pages/CustomerHome';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import AddJob from './pages/AddJob';
-import ViewJobs from './pages/ViewJobs';
-import Settings from './pages/Settings';
+import CustomerHome from './Pages/CustomerHome';
+import Login from './Pages/Login';
+import Dashboard from './Pages/Dashboard';
+import AddJob from './Pages/AddJob';
+import ViewJobs from './Pages/ViewJobs';
+import Settings from './Pages/Settings';
 
 // Theme configuration
 const theme = createTheme({
