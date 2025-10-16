@@ -10,14 +10,14 @@ import {
   Chip,
   IconButton
 } from '@mui/material';
-import { PieChart, ShowChart, Refresh, TrendingUp } from '@mui/icons-material';
+import { PieChart, ShowChart, Refresh, TrendingUp, Menu } from '@mui/icons-material';
 import Sidebar from '../components/Sidebar';
 import PieChartCard from '../components/PieChartCard';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useSidebar } from '../context/SidebarContext';
 
 const Dashboard = () => {
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed, toggleSidebar } = useSidebar();
   const [chartType, setChartType] = useState('pie');
   const [dashboardData, setDashboardData] = useState({
     totalJobs: 0,
@@ -152,33 +152,54 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', width: '100vw' }}>
+    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', minHeight: '100vh' }}>
       <Sidebar />
       
       <Box sx={{ 
         flexGrow: 1, 
-        ml: isCollapsed ? '70px' : '240px', 
-        p: 4,
+        ml: { xs: 0, md: isCollapsed ? '70px' : '240px' }, 
+        p: { xs: 2, sm: 3, md: 4 },
+        pt: { xs: '80px', md: 4 },
         transition: 'margin-left 0.3s ease',
         width: '100%',
-        maxWidth: 'none'
+        maxWidth: 'none',
+        overflow: 'hidden'
       }}>
         {/* Header */}
         <Box sx={{ mb: 4 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography 
-              variant="h4" 
-              sx={{ 
-                fontWeight: 'bold', 
-                color: '#007BFF',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 2
-              }}
-            >
-              <TrendingUp sx={{ fontSize: 40 }} />
-              Dashboard Analytics
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <IconButton
+                onClick={toggleSidebar}
+                sx={{ 
+                  display: { xs: 'block', md: 'none' },
+                  color: '#007BFF',
+                  bgcolor: 'rgba(0, 123, 255, 0.1)',
+                  '&:hover': { bgcolor: 'rgba(0, 123, 255, 0.2)' }
+                }}
+              >
+                <Menu />
+              </IconButton>
+              <Typography 
+                variant="h4" 
+                sx={{ 
+                  fontWeight: 'bold', 
+                  color: '#007BFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+                }}
+              >
+                <TrendingUp sx={{ fontSize: { xs: 30, md: 40 } }} />
+                <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                  Dashboard Analytics
+                </Box>
+                <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>
+                  Dashboard
+                </Box>
+              </Typography>
+            </Box>
             
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <ToggleButtonGroup
