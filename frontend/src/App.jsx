@@ -35,6 +35,10 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
+useEffect(() => {
+    console.log(`[App.jsx] App component rendered. Current path: ${location.pathname}`);
+  }, [location.pathname]);
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
