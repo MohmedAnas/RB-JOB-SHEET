@@ -107,6 +107,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// NEW: Root route for health checks
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'Server is healthy' });
+});
+
 // Security headers middleware
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
