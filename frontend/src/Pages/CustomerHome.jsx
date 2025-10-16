@@ -13,13 +13,16 @@ import { PhoneAndroid, Build, CheckCircle, Schedule, Support } from '@mui/icons-
 import Navbar from '../components/Navbar';
 import StatusCheckForm from '../components/StatusCheckForm';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+
 const CustomerHome = () => {
   const handleStatusSearch = async (searchValue) => {
     try {
       console.log('Searching for:', searchValue);
       
       // Call the actual API
-      const response = await fetch(`http://localhost:5000/api/jobs/search?q=${encodeURIComponent(searchValue)}`);
+      const response = await fetch(`${API_URL}/api/jobs/search?q=${encodeURIComponent(searchValue)}`);
       
       if (!response.ok) {
         throw new Error('Failed to search jobs');

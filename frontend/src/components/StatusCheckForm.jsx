@@ -27,11 +27,13 @@ const StatusCheckForm = ({ onSearch }) => {
     }
   };
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
   const handleDownloadInvoice = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/jobs/${jobData.uid}/invoice`, {
-        method: 'GET',
-      });
+      const response = await fetch(`${API_URL}/api/jobs/${jobData.uid}/invoice`, {
+  method: 'GET',
+});
       
       if (response.ok) {
         const blob = await response.blob();

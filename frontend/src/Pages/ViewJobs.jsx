@@ -23,6 +23,8 @@ import JobTable from '../components/JobTable';
 import DataForm from '../components/DataForm';
 import { useSidebar } from '../context/SidebarContext';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ViewJobs = () => {
   const { isCollapsed } = useSidebar();
   const [jobs, setJobs] = useState([]);
@@ -43,7 +45,7 @@ const ViewJobs = () => {
     setLoading(true);
     try {
       console.log('🔄 Fetching jobs from backend...');
-      const response = await fetch('http://localhost:5000/api/jobs', {
+      const response = await fetch(`${API_URL}/api/jobs`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Content-Type': 'application/json'
