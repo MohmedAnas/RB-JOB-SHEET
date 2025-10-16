@@ -76,27 +76,28 @@ const AddJob = () => {
             boxShadow: '0 8px 32px rgba(0, 123, 255, 0.3)'
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 0 }}>
               <IconButton
                 onClick={toggleSidebar}
                 sx={{ 
-                  display: { xs: 'block', md: 'none' },
+                  display: { xs: 'flex', md: 'none' },
                   color: 'white',
                   bgcolor: 'rgba(255, 255, 255, 0.1)',
-                  '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.2)' }
+                  '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.2)' },
+                  mr: 1
                 }}
               >
                 <Menu />
               </IconButton>
-              <Add sx={{ fontSize: { xs: 30, md: 40 } }} />
-              <Box>
+              <Add sx={{ fontSize: { xs: 24, md: 40 } }} />
+              <Box sx={{ minWidth: 0 }}>
                 <Typography 
                   variant="h4" 
                   sx={{ 
                     fontWeight: 'bold', 
                     mb: 0.5,
-                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+                    fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.125rem' }
                   }}
                 >
                   <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
