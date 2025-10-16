@@ -45,7 +45,7 @@ const ViewJobs = () => {
     setLoading(true);
     try {
       console.log('🔄 Fetching jobs from backend...');
-      const response = await fetch(`${API_URL}/api/jobs`, {
+      const response = await fetch(`${API_URL}/jobs`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Content-Type': 'application/json'
