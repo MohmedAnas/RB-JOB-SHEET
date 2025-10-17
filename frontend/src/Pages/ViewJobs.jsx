@@ -323,7 +323,7 @@ const ViewJobs = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', minHeight: '100vh', justifyContent: 'center', width: '100vw', overflowX: 'hidden' }}>
       <Sidebar />
       
 <Box sx={{ 
