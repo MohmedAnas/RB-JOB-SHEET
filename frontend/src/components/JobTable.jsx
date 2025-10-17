@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem
 } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { DataGrid } from '@mui/x-data-grid';
 import { Search, MoreVert, Edit, Delete, Visibility } from '@mui/icons-material';
 
@@ -18,6 +19,7 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -50,6 +52,8 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
         case 'delete':
           onDelete?.(selectedJob);
           break;
+        default:
+          break;
       }
     }
     handleMenuClose();
@@ -70,9 +74,9 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
       minWidth: 80,
       fontWeight: 'bold',
       renderCell: (params) => (
-        <Typography 
-          variant="body2" 
-          sx={{ 
+        <Typography
+          variant="body2"
+          sx={{
             fontWeight: 'bold',
             cursor: 'pointer',
             color: '#007BFF',
@@ -92,9 +96,9 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
       minWidth: 100,
       flex: 1,
       renderCell: (params) => (
-        <Typography 
-          variant="body2" 
-          sx={{ 
+        <Typography
+          variant="body2"
+          sx={{
             cursor: 'pointer',
             '&:hover': { color: '#007BFF' },
             fontSize: { xs: '0.75rem', md: '0.875rem' }
@@ -111,9 +115,9 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
       width: 110,
       minWidth: 90,
       renderCell: (params) => (
-        <Typography 
-          variant="body2" 
-          sx={{ 
+        <Typography
+          variant="body2"
+          sx={{
             cursor: 'pointer',
             '&:hover': { color: '#007BFF' },
             fontSize: { xs: '0.75rem', md: '0.875rem' }
@@ -131,9 +135,9 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
       minWidth: 100,
       flex: 1,
       renderCell: (params) => (
-        <Typography 
-          variant="body2" 
-          sx={{ 
+        <Typography
+          variant="body2"
+          sx={{
             cursor: 'pointer',
             '&:hover': { color: '#007BFF' },
             fontSize: { xs: '0.75rem', md: '0.875rem' }
@@ -182,33 +186,37 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
   ];
 
   return (
-    <Card 
-      sx={{ 
+    <Card
+      sx={{
         background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
         boxShadow: '0 8px 32px rgba(0, 123, 255, 0.1)',
         borderRadius: 3,
         border: '1px solid rgba(0, 123, 255, 0.1)'
       }}
     >
-      <CardContent sx={{ p: 3 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography 
-            variant="h5" 
-            sx={{ 
-              color: '#007BFF', 
-              fontWeight: 'bold'
-            }}
+      <CardContent sx={{ p: { xs: 1, sm: 3 } }}>
+        {/* Search & Heading */}
+        <Box sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: 'space-between',
+          alignItems: { xs: 'start', sm: 'center' },
+          mb: 2,
+          gap: 1
+        }}>
+          <Typography
+            variant="h5"
+            sx={{ color: '#007BFF', fontWeight: 'bold', mb: { xs: 1, sm: 0 } }}
           >
             Job Entries ({filteredJobs.length})
           </Typography>
-          
           <TextField
             size="small"
             placeholder="Search jobs..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{ 
-              width: 300,
+            sx={{
+              width: { xs: '100%', sm: 300 },
               '& .MuiOutlinedInput-root': { borderRadius: 2 }
             }}
             InputProps={{
@@ -221,42 +229,67 @@ const JobTable = ({ jobs, onEdit, onDelete, onView }) => {
           />
         </Box>
 
-        <Box sx={{ 
-          height: 500, 
-          width: '100%',
-          overflow: 'auto'
-        }}>
-          <DataGrid
-            rows={filteredJobs}
-            columns={columns}
-            getRowId={(row) => row.uid}
-            pageSize={10}
-            rowsPerPageOptions={[10, 25, 50]}
-            disableSelectionOnClick
-            disableColumnResize={false} // Allows column resizing
-            sx={{
-              border: 'none',
-              '& .MuiDataGrid-columnHeaders': {
-                bgcolor: '#f8f9fa',
-                color: '#007BFF',
-                fontWeight: 'bold',
-                fontSize: '0.875rem'
-              },
-              '& .MuiDataGrid-row': {
-                '&:hover': {
-                  bgcolor: 'rgba(0, 123, 255, 0.04)'
-                }
-              },
-              '& .MuiDataGrid-cell': {
-                fontSize: '0.875rem'
-              },
-              '& .MuiDataGrid-virtualScroller': {
-                // Ensures proper scrolling behavior
-                overflowX: 'auto'
-              }
-            }}
-          />
-        </Box>
+        {/* Desktop/Table: DataGrid, Mobile: Card List */}
+        {!isMobile ? (
+          <Box sx={{ height: 500, width: '100%', overflow: 'auto' }}>
+            <DataGrid
+              rows={filteredJobs}
+              columns={columns}
+              getRowId={(row) => row.uid}
+              pageSize={10}
+              rowsPerPageOptions={[10, 25, 50]}
+              disableSelectionOnClick
+              disableColumnResize={false}
+              sx={{
+                border: 'none',
+                '& .MuiDataGrid-columnHeaders': {
+                  bgcolor: '#f8f9fa',
+                  color: '#007BFF',
+                  fontWeight: 'bold',
+                  fontSize: '0.875rem'
+                },
+                '& .MuiDataGrid-row': {
+                  '&:hover': { bgcolor: 'rgba(0, 123, 255, 0.04)' }
+                },
+                '& .MuiDataGrid-cell': { fontSize: '0.875rem' },
+                '& .MuiDataGrid-virtualScroller': { overflowX: 'auto' }
+              }}
+            />
+          </Box>
+        ) : (
+          <Box>
+            {filteredJobs.length === 0 ? (
+              <Typography sx={{ py: 2, textAlign: 'center', color: '#888' }}>No jobs found.</Typography>
+            ) : (
+              filteredJobs.map((job) => (
+                <Card key={job.uid} elevation={2} sx={{ mb: 2, borderLeft: `5px solid ${getStatusColor(job.status)}` }}>
+                  <CardContent sx={{ py: 1.5 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                      <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#007BFF' }}>
+                        {job.uid}
+                      </Typography>
+                      <Chip label={job.status} size="small" sx={{ bgcolor: getStatusColor(job.status), color: 'white', fontWeight: 'bold' }} />
+                    </Box>
+                    <Typography><b>Customer:</b> {job.customerName}</Typography>
+                    <Typography><b>Mobile:</b> {job.mobileNumber}</Typography>
+                    <Typography><b>Device:</b> {job.mobileModel}</Typography>
+                    <Box sx={{ pt: 1, display: 'flex', gap: 1 }}>
+                      <IconButton size="small" onClick={() => onView(job)} sx={{ color: '#2196f3' }}>
+                        <Visibility fontSize="small" />
+                      </IconButton>
+                      <IconButton size="small" onClick={() => onEdit(job)} sx={{ color: '#ff9800' }}>
+                        <Edit fontSize="small" />
+                      </IconButton>
+                      <IconButton size="small" onClick={() => onDelete(job)} sx={{ color: '#f44336' }}>
+                        <Delete fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </Box>
+        )}
       </CardContent>
 
       <Menu
