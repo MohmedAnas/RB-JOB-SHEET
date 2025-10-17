@@ -326,17 +326,18 @@ const ViewJobs = () => {
     <Box sx={{ display: 'flex', bgcolor: '#f5f7fa', minHeight: '100vh' }}>
       <Sidebar />
       
-    <Box sx={{ 
-        flexGrow: 1, 
-        ml: { xs: 0, md: isCollapsed ? '70px' : '240px' },
-        p: { xs: 1, sm: 2, md: 4 },
-        pt: { xs: '70px', md: 4 },
-        minWidth: 0, // keep for overflow
-        transition: 'margin-left 0.3s ease',
-        width: '100%',
-        maxWidth: 'none',
-        overflow: 'hidden'
-      }}>
+<Box sx={{ 
+   flexGrow: 1, 
+   ml: { xs: 0, md: isCollapsed ? '70px' : '240px' },
+   p: { xs: 2, sm: 3, md: 4 },
+   pt: { xs: '80px', md: 4 },
+   minWidth: 0,
+   transition: 'margin-left 0.3s ease',
+   width: '100%',
+   maxWidth: { xs: '100%', md: 1200 }, // Limit overall app width on desktop!
+   mx: 'auto',                        // Center main content area
+   overflow: 'hidden'
+ }}>
         {/* Header */}
         <Paper 
           sx={{ 
