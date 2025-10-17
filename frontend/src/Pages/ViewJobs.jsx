@@ -442,7 +442,9 @@ const ViewJobs = () => {
         {/* Jobs Table Container */}
         <Box sx={{ 
           width: '100%',
-          overflow: 'auto' // Allows horizontal scrolling within this container only
+          maxWidth: { xs: '100%', md: 1100 }, // Limit width on desktop/tablet
+          mx: 'auto', // Center horizontally
+          overflow: 'auto'
         }}>
           <JobTable 
             jobs={jobs}
