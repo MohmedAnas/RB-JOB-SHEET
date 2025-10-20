@@ -447,6 +447,7 @@ const ViewJobs = () => {
     Add New Job
   </Button>
 </Box>
+      </Box>
         </Paper>
 
         {/* Jobs Table Container */}
