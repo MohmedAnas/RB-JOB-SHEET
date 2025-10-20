@@ -388,56 +388,65 @@ const ViewJobs = () => {
               </Box>
             </Box>
             
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button
-                variant="outlined"
-                startIcon={<Refresh />}
-                onClick={fetchJobs}
-                disabled={loading}
-                sx={{
-                  borderColor: 'white',
-                  color: 'white',
-                  '&:hover': {
-                    borderColor: 'rgba(255,255,255,0.8)',
-                    bgcolor: 'rgba(255,255,255,0.1)'
-                  }
-                }}
-              >
-                Refresh
-              </Button>
+            <Box
+  sx={{
+    display: 'flex',
+    flexDirection: { xs: 'column', sm: 'row' },
+    gap: 2,
+    alignItems: { xs: 'stretch', sm: 'center' }
+  }}
+>
+  <Button
+    fullWidth
+    variant="outlined"
+    startIcon={<Refresh />}
+    onClick={fetchJobs}
+    disabled={loading}
+    sx={{
+      borderColor: 'white',
+      color: 'white',
+      '&:hover': {
+        borderColor: 'rgba(255,255,255,0.8)',
+        bgcolor: 'rgba(255,255,255,0.1)'
+      }
+    }}
+  >
+    Refresh
+  </Button>
 
-              <Button
-                variant="outlined"
-                startIcon={<Download />}
-                onClick={handleDownloadClick}
-                sx={{
-                  borderColor: 'white',
-                  color: 'white',
-                  '&:hover': {
-                    borderColor: 'rgba(255,255,255,0.8)',
-                    bgcolor: 'rgba(255,255,255,0.1)'
-                  }
-                }}
-              >
-                Download
-              </Button>
-              
-              <Button
-                variant="contained"
-                startIcon={<Add />}
-                onClick={() => navigate('/add-job')}
-                sx={{
-                  bgcolor: 'white',
-                  color: '#007BFF',
-                  '&:hover': {
-                    bgcolor: 'rgba(255,255,255,0.9)'
-                  }
-                }}
-              >
-                Add New Job
-              </Button>
-            </Box>
-          </Box>
+  <Button
+    fullWidth
+    variant="outlined"
+    startIcon={<Download />}
+    onClick={handleDownloadClick}
+    sx={{
+      borderColor: 'white',
+      color: 'white',
+      '&:hover': {
+        borderColor: 'rgba(255,255,255,0.8)',
+        bgcolor: 'rgba(255,255,255,0.1)'
+      }
+    }}
+  >
+    Download
+  </Button>
+  
+  <Button
+    fullWidth
+    variant="contained"
+    startIcon={<Add />}
+    onClick={() => navigate('/add-job')}
+    sx={{
+      bgcolor: 'white',
+      color: '#007BFF',
+      '&:hover': {
+        bgcolor: 'rgba(255,255,255,0.9)'
+      }
+    }}
+  >
+    Add New Job
+  </Button>
+</Box>
         </Paper>
 
         {/* Jobs Table Container */}
