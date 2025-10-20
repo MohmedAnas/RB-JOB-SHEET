@@ -245,7 +245,7 @@ const Dashboard = () => {
           </Box>
 
           {/* Stat Cards */}
-          <Grid container spacing={2} sx={{ mb: 1 }}>
+          <Grid container spacing={3} sx={{ mb: 1 }}>
             <Grid item xs={12} sm={6} md={3}>
               <Card
                 sx={{
@@ -254,7 +254,7 @@ const Dashboard = () => {
                   borderRadius: 3
                 }}
               >
-                <CardContent sx={{ textAlign: 'center', py: { xs: 1.5, sm: 2 } }}>
+                <CardContent sx={{ textAlign: 'center', py: { xs: 2.5, sm: 3 } }}>
                   <Typography
                     variant="h4"
                     sx={{
@@ -275,7 +275,7 @@ const Dashboard = () => {
                 sx={{
                   background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                   color: 'white',
-                  borderRadius: 3
+                  borderRadius: 4
                 }}
               >
                 <CardContent sx={{ textAlign: 'center', py: { xs: 1.5, sm: 2 } }}>
