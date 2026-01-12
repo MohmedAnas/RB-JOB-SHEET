@@ -107,7 +107,7 @@ const Login = () => {
         setLoadingMessage('Login successful!');
         
         setTimeout(() => {
-          navigate('/dashboard');
+          navigate('/dashboard', { replace: true });
         }, 500);
         return response;
       }).catch(error => error);
