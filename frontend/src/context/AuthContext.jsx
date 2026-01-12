@@ -1,47 +1,62 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jobService } from '../services/jobService';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth must be used within AuthProvider');
   }
   return context;
 };
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // null = unknown
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if user is already authenticated on app load
-    const checkAuth = () => {
-      const authenticated = jobService.isAuthenticated();
-      const userData = jobService.getCurrentUser();
-      setIsAuthenticated(authenticated);
-      setUser(userData);
-      setLoading(false);
+    const hydrateAuth = () => {
+      try {
+        const token = jobService.getToken?.() || localStorage.getItem('token');
+
+        if (token) {
+          const userData = jobService.getCurrentUser();
+          setIsAuthenticated(true);
+          setUser(userData);
+        } else {
+          setIsAuthenticated(false);
+          setUser(null);
+        }
+      } catch (err) {
+        setIsAuthenticated(false);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
     };
-    
-    checkAuth();
+
+    hydrateAuth();
   }, []);
 
   const login = async (email, password) => {
-    try {
-      const response = await jobService.login(email, password);
-      setIsAuthenticated(true);
-      setUser(response.user);
-      return response;
-    } catch (error) {
-      throw error;
+    const response = await jobService.login(email, password);
+
+    // IMPORTANT: persist immediately
+    if (response?.token) {
+      localStorage.setItem('token', response.token);
     }
+
+    setIsAuthenticated(true);
+    setUser(response.user);
+
+    return response;
   };
 
   const logout = () => {
     jobService.logout();
+    localStorage.removeItem('token');
     setIsAuthenticated(false);
     setUser(null);
   };
