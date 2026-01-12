@@ -104,7 +104,7 @@ function App() {
               } />
               
               {/* Redirect unknown routes */}
-              <Route path="*" element={<Navigate to="/" />} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
           </Router>
         </SidebarProvider>
